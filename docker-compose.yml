@@ -7,16 +7,18 @@ services:
     submin:
         container_name: submin
         build: .
-        image: thaim/submin:0.3
+        # image: thaim/submin:0.3
         ports:
         - 80:80
         environment:
-        - SUBMIN_ADMIN_MAIL=root@localhost
-        - SUBMIN_HOSTNAME=127.0.0.1
+        - SUBMIN_HOSTNAME=localhost
+        - SUBMIN_EXTERNAL_PORT=80
         - SUBMIN_SMTP_HOSTNAME=mail
         - SUBMIN_SMTP_PORT=1025
+        - SUBMIN_ADMIN_MAIL=root@localhost
         volumes:
-        - /mnt/s3/moreinteractive/svn:/var/lib/svn-old
-        - /mnt/s3/moreinteractive/svn/repos:/var/lib/svn
+        - "$PWD/svn/old:/var/lib/svn-old"
+        - "$PWD/svn/repos:/var/lib/svn"
+        - "$PWD/config:/var/lib/submin"
         links:
         - mail
